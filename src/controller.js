@@ -7,6 +7,7 @@ class Controller {
     document.querySelector('#sailbutton').addEventListener('click', () => {
         this.setSail();
     });
+    this.displayPorts('Southhampton', 'London');
 };
 
     initialiseSea() {
@@ -21,6 +22,15 @@ class Controller {
         backgroundIndex += 1;
 
       }, 1000);
+    };
+
+    displayPorts(currentPort, nextPort) {
+        const currentPortDiv = document.querySelector('#currentport');
+        const nextPortDiv = document.querySelector('#nextport');
+    
+        currentPortDiv.textContent = "Current Port: " + currentPort;
+        nextPortDiv.textContent = "Next Port: " + nextPort;
+    
     };
 
     renderPorts(ports) {
@@ -64,8 +74,11 @@ class Controller {
         const nextPortIndex = currentPortIndex + 1;
         const nextPortElement = document.querySelector(`[data-port-index='${nextPortIndex}']`);
             if (!nextPortElement) {
-                return alert('End of the line!');
+                //return alert('End of the line!');
+                return this.renderMessage(`${ship.currentPort.name} is the final destination`);
             };
+            
+        this.renderMessage(`Now departing ${ship.currentPort.name}`);
 
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
@@ -73,11 +86,29 @@ class Controller {
             if (shipLeft === (nextPortElement.offsetLeft - 32)) {
                 ship.setSail();
                 ship.dock();
+                    this.renderMessage(`We have arrived at ${ship.currentPort.name}`);
                 clearInterval(sailInterval);
+
+           this.displayPorts(currentPort, nextPort);   
   };
 
         shipElement.style.left = `${shipLeft + 1}px`;
             }, 20);
+        };
+
+        
+
+        renderMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.id = 'message';
+            messageElement.innerHTML = message;
+
+            const viewport = document.querySelector('#viewport');
+            viewport.appendChild(messageElement);
+
+            setTimeout(() => {
+                viewport.removeChild(messageElement);
+              }, 2000);
         };
 
 };

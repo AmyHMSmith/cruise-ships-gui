@@ -11,25 +11,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Noto+Sans+TC:wght@300&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+         
 </head>
 <body>
-    <script src="src/controller.js"></script>
+    <div class="container">
+        <div class="headsupdisplay">
+            <div id="currentport">Current Port:</div>
+            <div id="nextport">Next Port :</div>
+        </div>
+    </div>
+   <script src="src/controller.js"></script>
     <script src="src/Port.js"></script>
     <script src="src/Itinerary.js"></script>
     <script src="src/Ship.js"></script>
-    
+  
     <div id="viewport">
         <div id="ports"></div>
         <div id="ship"></div>
         <button id="sailbutton">Set Sail !</button>
     </div>
+   
     <script>
         const port = new Port();
         const itinerary = new Itinerary([
-            new Port('New York City'), 
-            new Port('Grand Turk'),
-            new Port('San Juan'),
-            new Port('Amber Cove')
+            new Port('Southampton'), 
+            new Port('London'),
+            new Port('Immingham'),
+            new Port('Liverpool')
         ])
        
         const ship = new Ship(itinerary);
@@ -38,5 +47,6 @@
         controller.renderPorts(itinerary.ports);
         controller.renderShip();
     </script>
+     
 </body>
 </html>
