@@ -7,7 +7,7 @@ class Controller {
     document.querySelector('#sailbutton').addEventListener('click', () => {
         this.setSail();
     });
-    this.displayPorts('Southhampton', 'London');
+    this.displayPorts(ship.itinerary.ports[0].name, ship.itinerary.ports[1].name);
 };
 
     initialiseSea() {
@@ -80,6 +80,8 @@ class Controller {
             
         this.renderMessage(`Now departing ${ship.currentPort.name}`);
 
+        this.displayPorts(ship.itinerary.ports[currentPortIndex].name, ship.itinerary.ports[nextPortIndex].name); 
+
         const shipElement = document.querySelector('#ship');
         const sailInterval = setInterval(() => {
         const shipLeft = parseInt(shipElement.style.left, 10);
@@ -88,15 +90,12 @@ class Controller {
                 ship.dock();
                     this.renderMessage(`We have arrived at ${ship.currentPort.name}`);
                 clearInterval(sailInterval);
-
-           this.displayPorts(currentPort, nextPort);   
   };
 
         shipElement.style.left = `${shipLeft + 1}px`;
             }, 20);
         };
 
-        
 
         renderMessage(message) {
             const messageElement = document.createElement('div');
