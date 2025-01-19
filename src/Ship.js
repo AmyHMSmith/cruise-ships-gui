@@ -1,3 +1,4 @@
+(function exportShip() {
 class Ship {
     constructor(itinerary){
         this.itinerary = itinerary;
@@ -6,6 +7,8 @@ class Ship {
 
         this.currentPort = itinerary.ports[0];
         this.currentPort.addShip(this);
+
+        this.nextPort = itinerary.ports[1];
     };
 
     
@@ -13,14 +16,13 @@ class Ship {
         const itinerary = this.itinerary;
         const currentPortIndex = itinerary.ports.indexOf(this.currentPort);
       
-        if (currentPortIndex === (itinerary.ports.length - 1)) {
-          throw new Error('-- End of itinerary --');
-        }
-      
-        this.previousPort = this.currentPort;
+        if (currentPortIndex < (itinerary.ports.length - 1)) {
+          this.previousPort = this.currentPort;
 
-        this.currentPort.removeShip(this);
-        this.currentPort = null;
+          this.currentPort.removeShip(this);
+          this.currentPort = null;
+        }
+
       };
 
     
@@ -30,10 +32,17 @@ class Ship {
       
         this.currentPort = itinerary.ports[previousPortIndex + 1];
 
+        if(previousPortIndex + 2 <= itinerary.ports.length){
+            this.nextPort = itinerary.ports[previousPortIndex + 2];
+        }
+
         this.currentPort.addShip(this);
       };
-
 };
-
-
-module.exports = Ship;
+    
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = Ship;
+    } else {
+        window.Ship = Ship;
+};
+}());
